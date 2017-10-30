@@ -31,7 +31,7 @@ class Weather extends Component {
     console.log('will mount');
     const { zipcode } = this.props;
 
-    const url = `https://api.openweathermap.org/data/2.5/weather?zip=${zipcode},us&appid=ea447465c3770fe495e7bf1c5298f30f`
+    const url = `//api.openweathermap.org/data/2.5/weather?zip=${zipcode},us&appid=ea447465c3770fe495e7bf1c5298f30f`
 
     axios.get(url)
     .then((res)=>res.data)
