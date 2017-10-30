@@ -30,7 +30,6 @@ app.get('/scrape', function(req, res){
         quotes.push(quote);
       })
     }
-    console.log('quotes', quotes);
 
     fs.writeFile('output.json', JSON.stringify(quotes), function(err){
       console.log('File successfully written! - Check your project directory for the output.json file');

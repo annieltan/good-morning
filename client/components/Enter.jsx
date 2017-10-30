@@ -23,8 +23,6 @@ class Enter extends Component {
   }
 
 	render(){
-    console.log('state', this.state)
-
     const { enterName, name, zipcode } = this.state;
     const submitStyle = { width: "0", height:"0", opacity:0 }
 
