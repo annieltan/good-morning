@@ -1,0 +1,57 @@
+body {
+  background-image: url("https://i0.wp.com/www.photoblog.com/learn/wp-content/uploads/2016/11/AlanStockPhotography-05060.jpg?resize=1320%2C880&ssl=1");
+  font-family: 'Quicksand', sans-serif, bold;
+  font-size: 15px;
+  color: white;
+  background-repeat:no-repeat;
+  background-size: 100% 100vh;
+}
+
+h1 {
+  font-family: 'Petit Formal Script', cursive;
+  font-size: 50px;
+}
+
+input.form-control {
+  background-color:rgba(0,0,0,0) !important;
+  border: 0;
+  border-radius: 0px;
+  outline: none !important;
+  box-shadow:none;
+}
+
+input:focus {
+  outline: none !important;
+  box-shadow:none;
+}
+
+input[type=text]:focus{
+  outline: none !important;
+  box-shadow:none;
+
+}
+
+input[type="text"] {
+  font-family: 'Petit Formal Script', cursive;
+  font-size: 50px;
+  color: white;
+  background-color: transparent;
+}
+
+.jumbotron.name {
+   background: rgba(220, 220, 220, 0.4);
+   width: 500px;
+   height: 100px;
+}
+
+.jumbotron.quote {
+   background: rgba(220, 220, 220, 0.7);
+}
+
+#weather-icon {
+  float: left
+}
+
+.description {
+  font-size: 10px;
+}
