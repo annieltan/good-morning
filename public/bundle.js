@@ -2328,18 +2328,21 @@ var Enter = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      console.log('state', this.state);
+
       var _state = this.state,
           enterName = _state.enterName,
           name = _state.name,
           zipcode = _state.zipcode;
 
+      var submitStyle = { width: "0", height: "0", opacity: 0 };
 
       return _react2.default.createElement(
         'div',
         { className: 'container' },
         enterName == false ? _react2.default.createElement(
           'div',
-          null,
+          { className: 'container' },
           _react2.default.createElement(
             'h1',
             { className: 'give-me-your-name' },
@@ -2347,30 +2350,33 @@ var Enter = function (_Component) {
           ),
           _react2.default.createElement(
             'div',
-            null,
+            { className: 'col-md-4 pull-right jumbotron name-zipcode' },
             _react2.default.createElement(
               'form',
-              { className: 'jumbotron name text-center pull-right form-horizontal',
+              { className: 'name',
                 onSubmit: this.handleSubmit },
               _react2.default.createElement(
                 'div',
                 { className: 'form-group' },
-                _react2.default.createElement(
-                  'label',
-                  null,
-                  ' Name '
-                ),
-                _react2.default.createElement('input', { type: 'text', className: 'form-control name',
-                  autoComplete: 'off',
-                  onChange: this.handleChange }),
-                _react2.default.createElement(
-                  'label',
-                  null,
-                  ' Zipcode '
-                ),
-                _react2.default.createElement('input', { type: 'text', className: 'form-control zipcode',
-                  autoComplete: 'off',
-                  onChange: this.handleChange })
+                _react2.default.createElement('input', {
+                  name: 'name',
+                  type: 'name',
+                  className: 'name',
+                  placeholder: 'Your Name',
+                  onChange: this.handleChange,
+                  required: true,
+                  autoComplete: 'off'
+                }),
+                _react2.default.createElement('input', {
+                  name: 'zipcode',
+                  type: 'zipcode',
+                  className: 'zipcode',
+                  placeholder: 'Your Zipcode',
+                  onChange: this.handleChange,
+                  required: true,
+                  autoComplete: 'off'
+                }),
+                _react2.default.createElement('input', { type: 'submit', style: submitStyle })
               )
             )
           )
@@ -26615,6 +26621,8 @@ var Weather = function (_Component) {
     };
 
     _this.KtoF = _this.KtoF.bind(_this);
+    _this.unixToTime = _this.unixToTime.bind(_this);
+
     return _this;
   }
 
@@ -26622,6 +26630,16 @@ var Weather = function (_Component) {
     key: 'KtoF',
     value: function KtoF(kelvin) {
       return Math.round(9 / 5 * (kelvin - 273) + 32);
+    }
+  }, {
+    key: 'unixToTime',
+    value: function unixToTime(timestamp) {
+      var hour = timestamp.getHours().toString();
+      var minutes = timestamp.getMinutes().toString();
+      var seconds = timestamp.getSeconds().toString();
+      var time = [hour, minutes, seconds];
+
+      return time.join(':');
     }
   }, {
     key: 'componentWillMount',
@@ -26632,7 +26650,9 @@ var Weather = function (_Component) {
       var zipcode = this.props.zipcode;
 
 
-      _axios2.default.get('http://api.openweathermap.org/data/2.5/weather?zip=' + zipcode + ',us&appid=ea447465c3770fe495e7bf1c5298f30f').then(function (res) {
+      var url = 'http://api.openweathermap.org/data/2.5/weather?zip=' + zipcode + ',us&appid=ea447465c3770fe495e7bf1c5298f30f';
+
+      _axios2.default.get(url).then(function (res) {
         return res.data;
       }).then(function (weather) {
         _this2.setState({ weather: weather });
@@ -26652,8 +26672,8 @@ var Weather = function (_Component) {
       var temp = this.KtoF(weather.main.temp * 1);
       var code = 'owf owf-2x owf-' + weather.cod;
       var desc = weather.weather[0].description;
-      var sunrise = new Date(weather.sys.sunrise * 1000);
-      var sunset = new Date(weather.sys.sunset * 1000);
+      var sunrise = this.unixToTime(new Date(weather.sys.sunrise * 1000));
+      var sunset = this.unixToTime(new Date(weather.sys.sunset * 1000));
 
       return _react2.default.createElement(
         'div',
@@ -26677,16 +26697,28 @@ var Weather = function (_Component) {
             ' ',
             desc,
             ' '
-          ),
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
           _react2.default.createElement(
             'p',
-            { className: 'sunrise' },
-            ' SUNRISE: '
-          ),
+            { className: 'sunrise pull-right' },
+            ' Sunrise: ',
+            sunrise,
+            ' '
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
           _react2.default.createElement(
             'p',
-            { className: 'sunset' },
-            ' SUNSET: '
+            { className: 'sunset pull-right' },
+            ' Sunset: ',
+            sunset,
+            ' '
           )
         )
       );

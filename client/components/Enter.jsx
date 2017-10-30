@@ -23,28 +23,41 @@ class Enter extends Component {
   }
 
 	render(){
+    console.log('state', this.state)
 
     const { enterName, name, zipcode } = this.state;
+    const submitStyle = { width: "0", height:"0", opacity:0 }
 
 		return (
 			<div className="container">
         {
           enterName == false ?
-            (<div>
+            (<div className="container">
               <h1 className="give-me-your-name"> Hi, what's your name and zipcode? </h1>
-              <div>
-                <form className="jumbotron name text-center pull-right form-horizontal"
+              <div className="col-md-4 pull-right jumbotron name-zipcode">
+                <form className="name"
                   onSubmit={ this.handleSubmit }>
-                  <div className="form-group">
-                      <label> Name </label>
-                      <input type="text" className="form-control name"
+                    <div className="form-group">
+                      <input
+                        name="name"
+                        type="name"
+                        className="name"
+                        placeholder="Your Name"
+                        onChange={ this.handleChange }
+                        required
                         autoComplete="off"
-                        onChange={ this.handleChange }/>
-                      <label> Zipcode </label>
-                      <input type="text" className="form-control zipcode"
+                      />
+                      <input
+                        name="zipcode"
+                        type="zipcode"
+                        className="zipcode"
+                        placeholder="Your Zipcode"
+                        onChange={ this.handleChange }
+                        required
                         autoComplete="off"
-                        onChange={ this.handleChange }/>
-                  </div>
+                      />
+                      <input type="submit" style={ submitStyle }/>
+                    </div>
                 </form>
               </div>
             </div>) :

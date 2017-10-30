@@ -1,6 +1,6 @@
 body {
   background-image: url("https://i0.wp.com/www.photoblog.com/learn/wp-content/uploads/2016/11/AlanStockPhotography-05060.jpg?resize=1320%2C880&ssl=1");
-  font-family: 'Quicksand', sans-serif, bold;
+  font-family: 'Lato', sans-serif;
   font-size: 15px;
   color: white;
   background-repeat:no-repeat;
@@ -12,40 +12,33 @@ h1 {
   font-size: 50px;
 }
 
-input.form-control {
-  background-color:rgba(0,0,0,0) !important;
-  border: 0;
-  border-radius: 0px;
-  outline: none !important;
-  box-shadow:none;
-}
-
-input:focus {
-  outline: none !important;
-  box-shadow:none;
-}
-
-input[type=text]:focus{
-  outline: none !important;
-  box-shadow:none;
-
-}
-
-input[type="text"] {
+input {
   font-family: 'Petit Formal Script', cursive;
-  font-size: 50px;
+  font-size: 30px;
   color: white;
   background-color: transparent;
+  background-color:rgba(0,0,0,0) !important;
+  border: none;
+  border-radius: 0px;
+  outline: none !important;
+  box-shadow:none !important;
 }
 
-.jumbotron.name {
+.jumbotron.name-zipcode {
    background: rgba(220, 220, 220, 0.4);
-   width: 500px;
-   height: 100px;
+   width: 400px;
+   height: 150px;
+   padding: 20px;
 }
 
 .jumbotron.quote {
    background: rgba(220, 220, 220, 0.7);
+   color: black;
+}
+
+.lead {
+  font-size: 30px;
+  color: black;
 }
 
 #weather-icon {
@@ -53,5 +46,5 @@ input[type="text"] {
 }
 
 .description {
-  font-size: 10px;
+  font-size: 15px;
 }

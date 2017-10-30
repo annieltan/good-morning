@@ -6,23 +6,34 @@ class Weather extends Component {
 
   constructor(){
     super()
-
     this.state = {
       weather: {}
     }
 
     this.KtoF = this.KtoF.bind(this);
+    this.unixToTime = this.unixToTime.bind(this);
+
   }
 
   KtoF(kelvin){
     return Math.round(((9/5)*(kelvin- 273)) + 32)
   }
 
+  unixToTime(timestamp){
+    const hour = timestamp.getHours().toString();
+    const minutes = timestamp.getMinutes().toString();
+    const seconds = timestamp.getSeconds().toString();
+    const time = [hour, minutes, seconds]
+
+    return time.join(':');
+  }
   componentWillMount(){
     console.log('will mount');
     const { zipcode } = this.props;
 
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?zip=${zipcode},us&appid=ea447465c3770fe495e7bf1c5298f30f`)
+    const url = `http://api.openweathermap.org/data/2.5/weather?zip=${zipcode},us&appid=ea447465c3770fe495e7bf1c5298f30f`
+
+    axios.get(url)
     .then((res)=>res.data)
     .then(weather =>{
       this.setState({ weather })
@@ -40,8 +51,8 @@ class Weather extends Component {
     const temp = this.KtoF(weather.main.temp*1);
     const code = `owf owf-2x owf-${weather.cod}`;
     const desc = weather.weather[0].description;
-    const sunrise = new Date(weather.sys.sunrise*1000);
-    const sunset = new Date(weather.sys.sunset*1000);
+    const sunrise = this.unixToTime(new Date(weather.sys.sunrise*1000));
+    const sunset = this.unixToTime(new Date(weather.sys.sunset*1000));
 
 		return (
       <div className="pull-right">
@@ -53,11 +64,16 @@ class Weather extends Component {
           {
             <p className="description pull-right"> { desc } </p>
           }
+        </div>
+        <div>
           {
-            <p className="sunrise"> SUNRISE: </p>
+            <p className="sunrise pull-right"> Sunrise: {sunrise} </p>
           }
+        </div>
+
+        <div>
           {
-            <p className="sunset"> SUNSET: </p>
+            <p className="sunset pull-right"> Sunset: {sunset} </p>
           }
         </div>
 
