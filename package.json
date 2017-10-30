@@ -1,7 +1,6 @@
 {
   "name": "good_morning",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -26,5 +25,15 @@
     "react-router-dom": "^4.2.2",
     "request": "^2.83.0",
     "webpack": "^3.8.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annieltan/good-morning.git"
+  },
+  "bugs": {
+    "url": "https://github.com/annieltan/good-morning/issues"
+  },
+  "homepage": "https://github.com/annieltan/good-morning#readme",
+  "description": ""
 }

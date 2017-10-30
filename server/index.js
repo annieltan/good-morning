@@ -4,7 +4,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var app     = express();
 var path = require('path');
-
+var port = process.env.PORT || 8081
 // static middleware
 app.use(express.static(path.join(__dirname, '..', 'node_modules')))
 app.use(express.static(path.join(__dirname, '..', 'public')))
@@ -40,6 +40,6 @@ app.get('/scrape', function(req, res){
   })
 })
 
-app.listen('8081')
+app.listen(port)
 console.log('Magic happens on port 8081');
 exports = module.exports = app;
