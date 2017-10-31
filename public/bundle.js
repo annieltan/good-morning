@@ -26412,21 +26412,17 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(9);
 
-var _Quote = __webpack_require__(86);
-
-var _Quote2 = _interopRequireDefault(_Quote);
-
 var _Weather = __webpack_require__(88);
 
 var _Weather2 = _interopRequireDefault(_Weather);
 
-var _Music = __webpack_require__(108);
-
-var _Music2 = _interopRequireDefault(_Music);
-
 var _Enter = __webpack_require__(30);
 
 var _Enter2 = _interopRequireDefault(_Enter);
+
+var _Slider = __webpack_require__(109);
+
+var _Slider2 = _interopRequireDefault(_Slider);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26470,7 +26466,7 @@ var Main = function (_Component) {
 				_react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_Quote2.default, null)
+					_react2.default.createElement(_Slider2.default, null)
 				)
 			);
 		}
@@ -26489,7 +26485,7 @@ exports.default = Main;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26513,54 +26509,64 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Quote = function (_Component) {
-  _inherits(Quote, _Component);
+	_inherits(Quote, _Component);
 
-  function Quote() {
-    _classCallCheck(this, Quote);
+	function Quote() {
+		_classCallCheck(this, Quote);
 
-    var _this = _possibleConstructorReturn(this, (Quote.__proto__ || Object.getPrototypeOf(Quote)).call(this));
+		var _this = _possibleConstructorReturn(this, (Quote.__proto__ || Object.getPrototypeOf(Quote)).call(this));
 
-    _this.state = { quote: '' };
-    _this.fetchQuote = _this.fetchQuote.bind(_this);
-    return _this;
-  }
+		_this.state = { quote: 'How are you today?' };
+		_this.fetchQuote = _this.fetchQuote.bind(_this);
+		return _this;
+	}
 
-  _createClass(Quote, [{
-    key: 'fetchQuote',
-    value: function fetchQuote() {
-      var length = _output2.default.length++;
-      var number = Math.floor(Math.random() * length);
-      this.setState({ quote: _output2.default[number] });
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.interval = setInterval(this.fetchQuote, 5000);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      clearInterval(this.interval);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var quote = this.state.quote;
+	_createClass(Quote, [{
+		key: 'fetchQuote',
+		value: function fetchQuote() {
+			var length = _output2.default.length - 1;
+			var number = Math.floor(Math.random() * length);
+			this.setState({ quote: _output2.default[number] });
+		}
+	}, {
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			clearInterval(this.interval);
+			this.interval = setInterval(this.fetchQuote, nextProps.seconds * 1000);
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			this.interval = setInterval(this.fetchQuote, this.props.seconds * 1000);
+		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			clearInterval(this.interval);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var quote = this.state.quote;
 
-      console.log('quote rendered', quote);
-      return _react2.default.createElement(
-        'div',
-        { className: 'jumbotron quote text-center' },
-        _react2.default.createElement(
-          'p',
-          { className: 'display-3 lead' },
-          quote
-        )
-      );
-    }
-  }]);
+			console.log('quote rendered', quote);
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'div',
+					{ className: 'jumbotron quote text-center' },
+					_react2.default.createElement(
+						'p',
+						{ className: 'display-3 lead' },
+						quote
+					)
+				)
+			);
+		}
+	}]);
 
-  return Quote;
+	return Quote;
 }(_react.Component);
 
 exports.default = Quote;
@@ -26630,8 +26636,7 @@ var Weather = function (_Component) {
     value: function unixToTime(timestamp) {
       var hour = timestamp.getHours().toString();
       var minutes = timestamp.getMinutes().toString();
-      var seconds = timestamp.getSeconds().toString();
-      var time = [hour, minutes, seconds];
+      var time = [hour, minutes];
 
       return time.join(':');
     }
@@ -26661,7 +26666,6 @@ var Weather = function (_Component) {
 
       var weather = this.state.weather;
 
-      console.log('weather', weather);
       var name = weather.name;
       var temp = this.KtoF(weather.main.temp * 1);
       var code = 'owf owf-2x owf-' + weather.cod;
@@ -26675,7 +26679,7 @@ var Weather = function (_Component) {
         _react2.default.createElement('i', { className: code, id: 'weather-icon' }),
         _react2.default.createElement(
           'p',
-          { className: 'temperature-city pull-right' },
+          { className: 'temperature-city' },
           ' ',
           temp,
           ' \xB0F in ',
@@ -26686,33 +26690,41 @@ var Weather = function (_Component) {
           'div',
           null,
           _react2.default.createElement(
-            'p',
-            { className: 'description pull-right' },
-            ' ',
-            desc,
-            ' '
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'p',
-            { className: 'sunrise pull-right' },
-            ' Sunrise: ',
-            sunrise,
-            ' '
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'p',
-            { className: 'sunset pull-right' },
-            ' Sunset: ',
-            sunset,
-            ' '
+            'ul',
+            null,
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'p',
+                { className: 'description' },
+                ' ',
+                desc,
+                ' '
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'p',
+                { className: 'sunrise' },
+                ' Sunrise: ',
+                sunrise,
+                ' '
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'p',
+                { className: 'sunset' },
+                ' Sunset: ',
+                sunset,
+                ' '
+              )
+            )
           )
         )
       );
@@ -27615,7 +27627,8 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 108 */
+/* 108 */,
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27631,7 +27644,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(9);
+var _Quote = __webpack_require__(86);
+
+var _Quote2 = _interopRequireDefault(_Quote);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27641,32 +27656,62 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Music = function (_Component) {
-  _inherits(Music, _Component);
+var Slider = function (_Component) {
+  _inherits(Slider, _Component);
 
-  function Music() {
-    _classCallCheck(this, Music);
+  function Slider() {
+    _classCallCheck(this, Slider);
 
-    return _possibleConstructorReturn(this, (Music.__proto__ || Object.getPrototypeOf(Music)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Slider.__proto__ || Object.getPrototypeOf(Slider)).call(this));
+
+    _this.state = { value: 30 };
+    _this.handleChange = _this.handleChange.bind(_this);
+
+    return _this;
   }
 
-  _createClass(Music, [{
+  _createClass(Slider, [{
+    key: 'handleChange',
+    value: function handleChange(event) {
+      this.setState({ value: event.target.value });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var value = this.state.value;
+
 
       return _react2.default.createElement(
         'div',
-        { className: 'container pull-right' },
-        _react2.default.createElement('iframe', { src: 'https://open.spotify.com/embed?uri=spotify:user:spotify:playlist:37i9dQZF1DX2MyUCsl25eb&theme=white',
-          width: '300', height: '80', allowtransparency: 'true' })
+        null,
+        _react2.default.createElement(_Quote2.default, { seconds: value }),
+        _react2.default.createElement(
+          'div',
+          { id: 'slidecontainer' },
+          _react2.default.createElement('input', {
+            type: 'range',
+            min: '1',
+            max: '60',
+            defaultValue: value,
+            className: 'slider',
+            onChange: this.handleChange,
+            id: 'myRange' }),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Quote will change every ',
+            value,
+            ' seconds.'
+          )
+        )
       );
     }
   }]);
 
-  return Music;
+  return Slider;
 }(_react.Component);
 
-exports.default = Music;
+exports.default = Slider;
 
 /***/ })
 /******/ ]);
