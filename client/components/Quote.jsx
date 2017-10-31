@@ -5,18 +5,23 @@ import output from '../../output.json';
 class Quote extends Component {
 	constructor(){
 		super()
-		this.state = { quote: '' }
+		this.state = { quote: 'How are you today?' }
     this.fetchQuote = this.fetchQuote.bind(this)
 	}
 
   fetchQuote(){
-    const length = output.length++;
+    const length = output.length-1;
     const number = Math.floor(Math.random() * length);
     this.setState({ quote: output[number] })
   }
 
+	componentWillReceiveProps(nextProps){
+		clearInterval(this.interval);
+		this.interval = setInterval(this.fetchQuote, nextProps.seconds*1000);
+	}
+
   componentDidMount() {
-    this.interval = setInterval(this.fetchQuote, 5000);
+    this.interval = setInterval(this.fetchQuote, this.props.seconds*1000);
   }
 
   componentWillUnmount() {
@@ -27,9 +32,12 @@ class Quote extends Component {
 		const { quote } = this.state;
     console.log('quote rendered', quote)
 		return (
-			<div className="jumbotron quote text-center">
-				<p className="display-3 lead">{ quote }</p>
+			<div>
+				<div className="jumbotron quote text-center">
+					<p className="display-3 lead">{ quote }</p>
+				</div>
 			</div>
+
 		)
 	}
 }

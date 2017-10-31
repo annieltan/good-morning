@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route, NavLink, withRouter} from 'react-router-dom';
-import Quote from './Quote';
 import Weather from './Weather';
-import Music from './Music';
 import Enter from './Enter';
+import Slider from './Slider';
 
 class Main extends Component {
 
@@ -17,7 +16,7 @@ class Main extends Component {
 				</div>
 				<h1 className="text-center">Good Morning, { name }</h1>
 				<div>
-					<Quote />
+					<Slider />
 				</div>
 			</div>
 		)

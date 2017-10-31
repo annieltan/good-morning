@@ -22,8 +22,7 @@ class Weather extends Component {
   unixToTime(timestamp){
     const hour = timestamp.getHours().toString();
     const minutes = timestamp.getMinutes().toString();
-    const seconds = timestamp.getSeconds().toString();
-    const time = [hour, minutes, seconds]
+    const time = [hour, minutes]
 
     return time.join(':');
   }
@@ -46,7 +45,6 @@ class Weather extends Component {
     }
 
     const { weather } = this.state;
-    console.log('weather', weather)
     const name = weather.name;
     const temp = this.KtoF(weather.main.temp*1);
     const code = `owf owf-2x owf-${weather.cod}`;
@@ -58,26 +56,27 @@ class Weather extends Component {
       <div className="pull-right">
         <i className= { code } id="weather-icon" ></i>
         {
-          <p className="temperature-city pull-right"> {temp} °F in {name} </p>
+          <p className="temperature-city"> {temp} °F in {name} </p>
         }
         <div>
-          {
-            <p className="description pull-right"> { desc } </p>
-          }
+          <ul>
+            <li>
+              {
+                <p className="description"> { desc } </p>
+              }
+            </li>
+            <li>
+              {
+                <p className="sunrise"> Sunrise: { sunrise } </p>
+              }
+             </li>
+             <li>
+               {
+                 <p className="sunset"> Sunset: { sunset } </p>
+               }
+              </li>
+          </ul>
         </div>
-        <div>
-          {
-            <p className="sunrise pull-right"> Sunrise: {sunrise} </p>
-          }
-        </div>
-
-        <div>
-          {
-            <p className="sunset pull-right"> Sunset: {sunset} </p>
-          }
-        </div>
-
-
       </div>
     )
 	}
